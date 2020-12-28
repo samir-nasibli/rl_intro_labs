@@ -26,10 +26,15 @@ Storage for university labs use (RL).
 python cart_pole_dqn_1.py --visualize
 python mountain_car_dqn_1.py --visualize
 ```
+or just choose your own number for test runs
+```bash
+python mountain_car_dqn_1.py --visualize --test_runs=35
+python cart_pole_dqn_1.py --visualize --test_runs=35
+```
 
 ## Note
 * if the test runs fail try to increase the number of iterations for training. 
-See, ```python mountain_car_dqn_1.py --help``` or ```python cart_pole_dqn_1.py --help```
+* See ```python mountain_car_dqn_1.py --help``` or ```python cart_pole_dqn_1.py --help``` for help.
 
 ## TODO
 * add logs for tensorboard
