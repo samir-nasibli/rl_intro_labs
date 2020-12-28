@@ -28,7 +28,7 @@ python mountain_car_dqn_1.py --visualize
 ```
 
 ## Note
-* if the training fails try increasing the number of iterations. 
+* if the test runs fail try to increase the number of iterations for training. 
 See, ```python mountain_car_dqn_1.py --help``` or ```python cart_pole_dqn_1.py --help```
 
 ## TODO
