@@ -33,7 +33,8 @@ python cart_pole_dqn_1.py --visualize --test_runs=35
 ```
 
 ## Note
-* if the test runs fail try to increase the number of iterations for training. 
+* if the test runs fail by the end of train and agent cannot successfully complete test runs, the number that were specified, please, restart (and increase the number of iterations if necessary)
+* recommended at least 6000 iters for `MountainCar-v0` env and 5000 for `CartPole-v1` env
 * See ```python mountain_car_dqn_1.py --help``` or ```python cart_pole_dqn_1.py --help``` for help.
 
 ## TODO
