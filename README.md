@@ -15,7 +15,7 @@ Storage for university labs use (RL).
 
 * See first task on `task1.txt`
 * All src and lections from course on `python` and `lections` dirs
-* all the rest src for second and third tasks:
+* all the the rest srcs for the second and third tasks:
   * DQN for `CartPole-v1` (Task #2)
   * DQN for `MountainCar-v0` (Task #3)
 
@@ -24,11 +24,12 @@ Storage for university labs use (RL).
 
 ``` bash
 python cart_pole_dqn_1.py --visualize
-python mountain_car_dqn.py --visualize
+python mountain_car_dqn_1.py --visualize
 ```
 
 ## Note
-* if training fails restart it.
+* if the training fails try increasing the number of iterations. 
+See, ```python mountain_car_dqn_1.py --help``` or ```python cart_pole_dqn_1.py --help```
 
 ## TODO
 * add logs for tensorboard
