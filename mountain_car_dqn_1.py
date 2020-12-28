@@ -10,7 +10,7 @@ import random
 from dqn import (DQNAgent, DQNLoss)
 from rl_tools import Experience
 
-from argpars import parse_args_mountain_car_dqn
+from argpars import parse_args
 
 
 def generate_session(agent, max_iterations=10000, gamma=0.9, visualize=False):
@@ -114,7 +114,8 @@ def train(agent, n_iterations, max_iterations, visualize, test_runs):
 
 
 if __name__ == '__main__':
-    args = parse_args_mountain_car_dqn()
+    description = 'mountain_car_dqn.py: MountainCar-v0 by DQN'
+    args = parse_args(description)
     env = gym.make('MountainCar-v0')
 
     visualize = args.visualize

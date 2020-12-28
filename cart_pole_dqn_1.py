@@ -10,7 +10,7 @@ import copy
 from dqn import (DQNAgent, DQNLoss)
 from rl_tools import Experience
 
-from argpars import parse_args_cart_pole_dqn
+from argpars import parse_args
 
 
 CART_POLE_MAX_VAL = 499
@@ -107,7 +107,8 @@ def train(agent, n_iterations, max_iterations, visualize, test_runs):
 
 
 if __name__ == '__main__':
-    args = parse_args_cart_pole_dqn()
+    description = 'car_pole_dqn.py: CartPolev1 by DQN'
+    args = parse_args(description)
     env = gym.make('CartPole-v1')
     env.reset()
 
