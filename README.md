@@ -14,7 +14,7 @@ Storage for university labs use (RL).
 ### Tasks
 
 * See first task on `task1.txt`
-* All src and lections from course on `python` and `lections` dirs
+* All srcs from course on `python` dir
 * all the the rest srcs for the second and third tasks:
   * DQN for `CartPole-v1` (Task #2)
   * DQN for `MountainCar-v0` (Task #3)
