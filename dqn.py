@@ -34,9 +34,6 @@ class DQNAgent(nn.Module):
             a = self.get_best_action(state)
         return a
 
-    def update(self):
-    	pass
-
 
 class DQNLoss(nn.Module):
     def __init__(self, gamma):
@@ -45,7 +42,7 @@ class DQNLoss(nn.Module):
         self.gamma = gamma
 
     def forward(self, agent, prev_agent_state, st, a, r, sts, D):
-        pred_Q = torch.gather(agent(st), 1, a.reshape(-1,1)).reshape(-1)
+        pred_Q = torch.gather(agent(st), 1, a.reshape(-1, 1)).reshape(-1)
         with torch.no_grad():
             max_Q = prev_agent_state(sts).max(dim=1)[0]
 

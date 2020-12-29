@@ -1,9 +1,11 @@
 from collections import deque
 import random
 
+
 # Discussed with groupemates and taken from
 # The idea on slides: Lection 3
 class Experience:
+
     def __init__(self):
         self.SIZE = 10000
         self.BATCH = 600

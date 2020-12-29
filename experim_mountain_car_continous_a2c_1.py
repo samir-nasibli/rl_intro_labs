@@ -33,7 +33,7 @@ def actor_critic(env, estimator, n_episode, gamma=1.0, logs=False, visualize=Fal
         state = env.reset()
         while True:
             state = scale_state(state)
-            action, log_prob, state_value =  estimator.get_action(state)
+            action, log_prob, state_value = estimator.get_action(state)
             action = action.clip(env.action_space.low[0],
                                  env.action_space.high[0])
             next_state, reward, is_done, _ = env.step(action)
@@ -51,7 +51,7 @@ def actor_critic(env, estimator, n_episode, gamma=1.0, logs=False, visualize=Fal
                     returns.append(Gt)
                 returns = returns[::-1]
                 returns = torch.tensor(returns)
-                returns = (returns - returns.mean()) /  (returns.std() + 1e-9)
+                returns = (returns - returns.mean()) / (returns.std() + 1e-9)
                 estimator.update( returns, log_probs, state_values)
                 if logs:
                     tb.add_scalar("MountainCarContinuous_a2c/total_reward", total_reward_episode[episode], episode)
@@ -72,7 +72,7 @@ if __name__ == '__main__':
     env = gym.make('MountainCarContinuous-v0')
     env.reset()
 
-    gamma = args.gamma # 0.9
+    gamma = args.gamma  # 0.9
     n_episode = args.n_episode
     logs = args.logs
     visualize = args.visualize

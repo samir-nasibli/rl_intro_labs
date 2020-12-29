@@ -28,25 +28,22 @@ class PolicyNetwork():
         self.model = ActorCriticModel(n_state, n_action, n_hidden)
         self.optimizer = torch.optim.Adam(self.model.parameters(), lr)
 
-
     def predict(self, s):
         """
         Compute the output using the continuous Actor Critic model
         @param s: input state
         @return: Gaussian distribution, state_value
-    
         """
         self.model.training = False
         return self.model(torch.Tensor(s))
 
     def get_action(self, s):
         """
-        Estimate the policy and sample an action, 
+        Estimate the policy and sample an action,
         compute its log probability
         @param s: input state
         @return: the selected action, log probability,
         predicted state-value
-        
         """
         dist, state_value = self.predict(s)
         action = dist.sample().numpy()

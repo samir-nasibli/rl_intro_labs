@@ -17,6 +17,7 @@ from argpars import parse_args
 
 CART_POLE_MAX_VAL = 499
 
+
 def generate_session(agent, max_iterations=10000, gamma=0.9, visualize=False):
     agent.eval()
     total_reward = 0
@@ -25,7 +26,7 @@ def generate_session(agent, max_iterations=10000, gamma=0.9, visualize=False):
     gamma_reward = 0
     with torch.no_grad():
         for i in range(max_iterations):
-            action = (agent.get_action(torch.from_numpy(np.array(s)).reshape(1,-1).float())).item()
+            action = (agent.get_action(torch.from_numpy(np.array(s)).reshape(1, -1).float())).item()
             new_s, r, is_done, _ = env.step(action)
             if visualize:
                 env.render()
@@ -58,7 +59,7 @@ def train(agent, n_iterations, max_iterations, visualize, logs, test_runs):
         s = env.reset()
         total_reward = 0.0
         states, actions, new_states, rewards, D, total_reward = generate_session(agent, max_iterations, gamma=gamma)
-        experience.add(states, actions, new_states, rewards,D)
+        experience.add(states, actions, new_states, rewards, D)
         states, actions, new_states, rewards, D = experience.replay()
         states = torch.from_numpy(np.array(states)).float()
         new_states = torch.from_numpy(np.array(new_states)).float()
@@ -82,7 +83,7 @@ def train(agent, n_iterations, max_iterations, visualize, logs, test_runs):
             while testing_status:
                 s = env.reset()
                 for iters in range(max_iterations):
-                    a = (agent.get_action(torch.from_numpy(np.array(s)).reshape(1,-1).float())).item()
+                    a = (agent.get_action(torch.from_numpy(np.array(s)).reshape(1, -1).float())).item()
                     s_new, r, is_done, _ = env.step(a)
                     total_reward += r
                     if is_done and iters < CART_POLE_MAX_VAL:
@@ -100,7 +101,7 @@ def train(agent, n_iterations, max_iterations, visualize, logs, test_runs):
                     testing_status = True
                     break
             if testing_status:
-                break 
+                break
             agent.epsilon = prev_eps
             agent.epsilon = (agent.epsilon - 0.0025) if agent.epsilon - 0.0025 > 0 else 0
 
@@ -120,10 +121,10 @@ if __name__ == '__main__':
     visualize = args.visualize
     test_runs = args.test_runs
 
-    epsilon = args.epsilon # 0.4
-    gamma = args.gamma # 0.94
-    n_iterations = args.n_iterations # 10000
-    max_iterations = args.max_iterations # 10000
+    epsilon = args.epsilon  # 0.4
+    gamma = args.gamma  # 0.94
+    n_iterations = args.n_iterations  # 10000
+    max_iterations = args.max_iterations  # 10000
     logs = args.logs
 
     if logs:
@@ -143,4 +144,4 @@ if __name__ == '__main__':
     train(agent, n_iterations, max_iterations, visualize, logs, test_runs)
     if logs:
         tb.close()
-    #env.close()
+    # env.close()

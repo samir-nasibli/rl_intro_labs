@@ -24,7 +24,7 @@ def generate_session(agent, max_iterations=10000, gamma=0.9, visualize=False):
     max_height = 0
     with torch.no_grad():
         for i in range(max_iterations):
-            action = (agent.get_action(torch.from_numpy(np.array(s)).reshape(1,-1).float())).item()
+            action = (agent.get_action(torch.from_numpy(np.array(s)).reshape(1, -1).float())).item()
             new_s, r, is_done, _ = env.step(action)
 
             if visualize:
@@ -34,8 +34,8 @@ def generate_session(agent, max_iterations=10000, gamma=0.9, visualize=False):
             states.append(s)
             new_states.append(new_s)
             actions.append(action)
-            height = (new_s[0] + 0.5)**2 
-            if height > max_height :
+            height = (new_s[0] + 0.5) ** 2
+            if height > max_height:
                 max_height = height
                 r += height * 15
             total_reward += r
@@ -48,7 +48,7 @@ def generate_session(agent, max_iterations=10000, gamma=0.9, visualize=False):
             s = new_s
             if is_done:
                 break
-    return states, actions, new_states, rewards,D, np.array([gamma_reward])
+    return states, actions, new_states, rewards, D, np.array([gamma_reward])
 
 
 def train(agent, n_iterations, max_iterations, visualize, logs, test_runs):
@@ -63,9 +63,9 @@ def train(agent, n_iterations, max_iterations, visualize, logs, test_runs):
         s = env.reset()
         total_reward = 0.0
 
-        states, actions, new_states, rewards ,D, total_reward = generate_session(agent, max_iterations, gamma=gamma)
+        states, actions, new_states, rewards, D, total_reward = generate_session(agent, max_iterations, gamma=gamma)
 
-        experience.add(states, actions, new_states, rewards,D)
+        experience.add(states, actions, new_states, rewards, D)
         states, actions, new_states, rewards, D = experience.replay()
 
         states = torch.from_numpy(np.array(states)).float()
@@ -108,7 +108,7 @@ def train(agent, n_iterations, max_iterations, visualize, logs, test_runs):
                     testing_status = True
                     break
             if testing_status:
-                    break 
+                break
             agent.epsilon = prev_eps
             agent.epsilon = (agent.epsilon - 0.0025) if agent.epsilon - 0.0025 > 0 else 0
             prev_agent_state.load_state_dict(agent.state_dict())
@@ -126,25 +126,25 @@ if __name__ == '__main__':
     visualize = args.visualize
     test_runs = args.test_runs
 
-    gamma = args.gamma # 0.5
-    epsilon = args.epsilon # 0.4
-    n_iterations = args.n_iterations # 10000
-    max_iterations = args.max_iterations # 10000
+    gamma = args.gamma  # 0.9
+    epsilon = args.epsilon  # 0.4
+    n_iterations = args.n_iterations  # 10000
+    max_iterations = args.max_iterations  # 10000
     logs = args.logs
     if logs:
         tb = SummaryWriter()
 
-    #if args.seed:
-    #    GLOBAL_SEED = args.seed
-    #    np.random.seed(GLOBAL_SEED)
-    #    env.seed(GLOBAL_SEED)
-    #    torch.manual_seed(GLOBAL_SEED)
+    # if args.seed:
+    #     GLOBAL_SEED = args.seed
+    #     np.random.seed(GLOBAL_SEED)
+    #     env.seed(GLOBAL_SEED)
+    #     torch.manual_seed(GLOBAL_SEED)
 
     env.reset()
 
     if visualize:
         env.render()
-    
+
     n_states = env.observation_space.shape[0]
     n_actions = env.action_space.n
 
@@ -157,4 +157,4 @@ if __name__ == '__main__':
     train(agent, n_iterations, max_iterations, visualize, logs, test_runs)
     if logs:
         tb.close()
-    #env.close()
+    # env.close()
