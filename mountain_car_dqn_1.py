@@ -4,6 +4,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+from torch.utils.tensorboard import SummaryWriter
+
 import copy
 import random
 
@@ -49,7 +51,7 @@ def generate_session(agent, max_iterations=10000, gamma=0.9, visualize=False):
     return states, actions, new_states, rewards,D, np.array([gamma_reward])
 
 
-def train(agent, n_iterations, max_iterations, visualize, test_runs):
+def train(agent, n_iterations, max_iterations, visualize, logs, test_runs):
     experience = Experience()
     prev_agent_state = copy.deepcopy(agent)
     optimizer = torch.optim.Adam(params=agent.parameters(), lr=0.002)
@@ -111,6 +113,9 @@ def train(agent, n_iterations, max_iterations, visualize, test_runs):
             agent.epsilon = (agent.epsilon - 0.0025) if agent.epsilon - 0.0025 > 0 else 0
             prev_agent_state.load_state_dict(agent.state_dict())
             print(f'Iteration: {i}, Total reward: {total_reward}, Max reward: {max_reward},  Epsilon: {agent.epsilon}')
+            if logs:
+                tb.add_scalar("MountainCar_dqn/total_reward", total_reward, i)
+                tb.add_scalar("MountainCar_dqn/max_reward", max_reward, i)
 
 
 if __name__ == '__main__':
@@ -125,6 +130,9 @@ if __name__ == '__main__':
     epsilon = args.epsilon # 0.4
     n_iterations = args.n_iterations # 10000
     max_iterations = args.max_iterations # 10000
+    logs = args.logs
+    if logs:
+        tb = SummaryWriter()
 
     #if args.seed:
     #    GLOBAL_SEED = args.seed
@@ -146,4 +154,7 @@ if __name__ == '__main__':
 
     agent = DQNAgent(epsilon, gamma, n_actions, n_states)
 
-    train(agent, n_iterations, max_iterations, visualize, test_runs)
+    train(agent, n_iterations, max_iterations, visualize, logs, test_runs)
+    if logs:
+        tb.close()
+    #env.close()

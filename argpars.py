@@ -24,7 +24,7 @@ def parse_args(description):
     parser.add_argument('--n_iterations', type=check_non_negative, default=10000, help='seed value')
     parser.add_argument('--max_iterations', type=check_non_negative, default=10000, help='seed value')
     parser.add_argument('--visualize',  action='store_true', help='visualize train and test runs')
-    parser.add_argument('--logs', help='') # logs for tensorboard
+    parser.add_argument('-l', '--logs', dest='logs', action='store_true', help='Save logs')
 
     args = parser.parse_args()
     return args

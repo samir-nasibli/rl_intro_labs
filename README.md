@@ -8,6 +8,7 @@ Storage for university labs use (RL).
 * numpy >= 19.1
 * gym 0.18.2
 * pytorch >= 3.8.5
+* tensorboard >= 2.4.0
 
 ## Tasks
 

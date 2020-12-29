@@ -5,6 +5,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+from torch.utils.tensorboard import SummaryWriter
+
 import copy
 
 from dqn import (DQNAgent, DQNLoss)
@@ -45,7 +47,7 @@ def generate_session(agent, max_iterations=10000, gamma=0.9, visualize=False):
     return states, actions, new_states, rewards, D, np.array([gamma_reward])
 
 
-def train(agent, n_iterations, max_iterations, visualize, test_runs):
+def train(agent, n_iterations, max_iterations, visualize, logs, test_runs):
     prev_agent_state = copy.deepcopy(agent)
     optimizer = torch.optim.Adam(params=agent.parameters(), lr=0.0002)
     criterion = DQNLoss(gamma)
@@ -104,10 +106,13 @@ def train(agent, n_iterations, max_iterations, visualize, test_runs):
 
             prev_agent_state.load_state_dict(agent.state_dict())
             print(f'Iteration: {i}, Total reward: {total_reward}, Max reward: {max_reward},  Epsilon: {agent.epsilon}')
+            if logs:
+                tb.add_scalar("CartPolev_dqn/total_reward", total_reward, i)
+                tb.add_scalar("CartPolev_dqn/max_reward", max_reward, i)
 
 
 if __name__ == '__main__':
-    description = 'car_pole_dqn.py: CartPolev1 by DQN'
+    description = 'cart_pole_dqn.py: CartPolev1 by DQN'
     args = parse_args(description)
     env = gym.make('CartPole-v1')
     env.reset()
@@ -118,7 +123,11 @@ if __name__ == '__main__':
     epsilon = args.epsilon # 0.4
     gamma = args.gamma # 0.94
     n_iterations = args.n_iterations # 10000
-    max_iterations = args.max_iterations # 3500
+    max_iterations = args.max_iterations # 10000
+    logs = args.logs
+
+    if logs:
+        tb = SummaryWriter()
 
     if visualize:
         env.render()
@@ -131,4 +140,7 @@ if __name__ == '__main__':
     s_new, reward, is_done, _ = env.step(0)
 
     agent = DQNAgent(epsilon, gamma, n_actions, n_states)
-    train(agent, n_iterations, max_iterations, visualize, test_runs)
+    train(agent, n_iterations, max_iterations, visualize, logs, test_runs)
+    if logs:
+        tb.close()
+    #env.close()
