@@ -25,25 +25,24 @@ Storage for university labs use (RL).
 
 ## Runnnig
 * Install all dependecies on your env
-
+* Run on the following commands
 ``` bash
 python cart_pole_dqn_1.py --visualize
 python mountain_car_dqn_1.py --visualize
 ```
-or just choose your own number for test runs
+   or just choose your own number for test runs
 ```bash
 python mountain_car_dqn_1.py --visualize --test_runs=35
 python cart_pole_dqn_1.py --visualize --test_runs=35
 ```
 
-For `MountainCarContinuous-v0` by A2C (additional case) run:
+* For `MountainCarContinuous-v0` by A2C (additional case) run:
 ```bash
 python experim_mountain_car_continous_a2c_1.py
 ```
 or
 ```bash
 python experim_mountain_car_continous_a2c_1.py --visualize --logs
-
 ```
 
 ## Note
