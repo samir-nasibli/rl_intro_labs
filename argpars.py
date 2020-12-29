@@ -28,3 +28,14 @@ def parse_args(description):
 
     args = parser.parse_args()
     return args
+
+def parse_args_mountain_car_a2c():
+    description = 'experim_mountain_car_continous_a2c_1.py: MountainCarContinuous by A2C'
+    parser = argparse.ArgumentParser(description=description)
+    parser.add_argument('--gamma', type=check_between_01, default=0.9, help='gamma value')
+    parser.add_argument('--n_episode', type=check_non_negative, default=200, help='seed value')
+    parser.add_argument('-l', '--logs', dest='logs', action='store_true', help='Save logs')
+    parser.add_argument('--visualize',  action='store_true', help='visualize runs')
+
+    args = parser.parse_args()
+    return args
